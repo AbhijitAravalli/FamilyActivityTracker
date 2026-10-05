@@ -1,3 +1,41 @@
+/**
+ * All activity times are saved and displayed in Atlantic Daylight Time
+ * (ADT = UTC-3), regardless of the browser's own OS timezone - matching
+ * the server-side logic in lib/timezone.js.
+ */
+const ADT_OFFSET_HOURS = -3;
+const ADT_OFFSET_MS = ADT_OFFSET_HOURS * 3600000;
+
+let timerTickHandle = null;
+
+function isoToAdtParts(iso) {
+  const shifted = new Date(new Date(iso).getTime() + ADT_OFFSET_MS);
+  return {
+    year: shifted.getUTCFullYear(),
+    month: shifted.getUTCMonth(),
+    day: shifted.getUTCDate(),
+    hours: shifted.getUTCHours(),
+    minutes: shifted.getUTCMinutes(),
+  };
+}
+
+function isoToAdtDateStr(iso) {
+  const p = isoToAdtParts(iso);
+  const mm = String(p.month + 1).padStart(2, '0');
+  const dd = String(p.day).padStart(2, '0');
+  return `${p.year}-${mm}-${dd}`;
+}
+
+function adtToIso(dateStr, hour24, minute) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const asUtcMs = Date.UTC(y, m - 1, d, hour24, minute, 0);
+  return new Date(asUtcMs - ADT_OFFSET_MS).toISOString();
+}
+
+function todayStr() {
+  return isoToAdtDateStr(new Date().toISOString());
+}
+
 const state = {
   members: [],
   categories: [],
@@ -5,13 +43,6 @@ const state = {
   timers: [],
   viewDate: todayStr(),
 };
-
-let timerTickHandle = null;
-
-function todayStr() {
-  const d = new Date();
-  return d.toISOString().slice(0, 10);
-}
 
 function formatMinutes(mins) {
   const h = Math.floor(mins / 60);
@@ -21,8 +52,10 @@ function formatMinutes(mins) {
 }
 
 function formatTime(iso) {
-  const d = new Date(iso);
-  return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  const { hours, minutes } = isoToAdtParts(iso);
+  const period = hours >= 12 ? 'PM' : 'AM';
+  const h12 = hours % 12 === 0 ? 12 : hours % 12;
+  return `${h12}:${String(minutes).padStart(2, '0')} ${period}`;
 }
 
 function formatHMS(totalSeconds) {
@@ -64,16 +97,17 @@ function populateSelect(select, items, { valueKey, labelKey } = {}) {
 }
 
 function dateTimeToIso(dateStr, timeStr) {
-  return new Date(`${dateStr}T${timeStr}:00`).toISOString();
+  const [hh, mm] = timeStr.split(':').map(Number);
+  return adtToIso(dateStr, hh, mm);
 }
 
 function isoToDateInput(iso) {
-  return iso.slice(0, 10);
+  return isoToAdtDateStr(iso);
 }
 
 function isoToTimeInput(iso) {
-  const d = new Date(iso);
-  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  const { hours, minutes } = isoToAdtParts(iso);
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
 
 function escapeHtml(str) {
@@ -550,23 +584,24 @@ async function setupVoiceDraftActions() {
 /* ---------------- Reports ---------------- */
 
 function startOfWeek(d) {
-  const date = new Date(d);
-  const day = date.getDay();
+  const date = new Date(d.getTime());
+  const day = date.getUTCDay();
   const diff = (day === 0 ? -6 : 1) - day; // Monday as start
-  date.setDate(date.getDate() + diff);
+  date.setUTCDate(date.getUTCDate() + diff);
   return date;
 }
 
 function setReportRange(range) {
-  const today = new Date();
+  const { year, month, day } = isoToAdtParts(new Date().toISOString());
+  const today = new Date(Date.UTC(year, month, day));
   let from, to;
   if (range === 'week') {
     from = startOfWeek(today);
-    to = new Date(from);
-    to.setDate(to.getDate() + 6);
+    to = new Date(from.getTime());
+    to.setUTCDate(to.getUTCDate() + 6);
   } else {
-    from = new Date(today.getFullYear(), today.getMonth(), 1);
-    to = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    from = new Date(Date.UTC(year, month, 1));
+    to = new Date(Date.UTC(year, month + 1, 0));
   }
   document.getElementById('r-from').value = from.toISOString().slice(0, 10);
   document.getElementById('r-to').value = to.toISOString().slice(0, 10);
@@ -622,7 +657,7 @@ function drawBarChart(canvasId, data) {
   ctx.clearRect(0, 0, width, height);
 
   if (!data.length) {
-    ctx.fillStyle = '#9aa0ab';
+    ctx.fillStyle = '#a39c8d';
     ctx.font = '13px sans-serif';
     ctx.fillText('No data for this range', 10, height / 2);
     return;
@@ -640,17 +675,17 @@ function drawBarChart(canvasId, data) {
     const barHeight = (d.value / maxVal) * chartHeight;
     const y = padding.top + (chartHeight - barHeight);
 
-    ctx.fillStyle = '#4f6df5';
+    ctx.fillStyle = '#5b6ee8';
     ctx.beginPath();
     ctx.roundRect ? ctx.roundRect(x, y, barWidth, barHeight, 4) : ctx.rect(x, y, barWidth, barHeight);
     ctx.fill();
 
-    ctx.fillStyle = '#1f2430';
+    ctx.fillStyle = '#2a2620';
     ctx.font = '11px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(formatMinutes(d.value), x + barWidth / 2, y - 4);
 
-    ctx.fillStyle = '#6b7280';
+    ctx.fillStyle = '#7d756a';
     ctx.font = '10px sans-serif';
     const label = d.label.length > 10 ? `${d.label.slice(0, 9)}…` : d.label;
     ctx.fillText(label, x + barWidth / 2, height - padding.bottom + 14);
@@ -664,7 +699,7 @@ function drawLineChart(canvasId, data) {
   ctx.clearRect(0, 0, width, height);
 
   if (!data.length) {
-    ctx.fillStyle = '#9aa0ab';
+    ctx.fillStyle = '#a39c8d';
     ctx.font = '13px sans-serif';
     ctx.fillText('No data for this range', 10, height / 2);
     return;
@@ -676,7 +711,7 @@ function drawLineChart(canvasId, data) {
   const maxVal = Math.max(1, ...data.map((d) => d.value));
   const stepX = data.length > 1 ? chartWidth / (data.length - 1) : 0;
 
-  ctx.strokeStyle = '#4f6df5';
+  ctx.strokeStyle = '#5b6ee8';
   ctx.lineWidth = 2;
   ctx.beginPath();
   data.forEach((d, i) => {
@@ -687,7 +722,7 @@ function drawLineChart(canvasId, data) {
   });
   ctx.stroke();
 
-  ctx.fillStyle = '#4f6df5';
+  ctx.fillStyle = '#5b6ee8';
   data.forEach((d, i) => {
     const x = padding.left + i * stepX;
     const y = padding.top + (chartHeight - (d.value / maxVal) * chartHeight);
@@ -696,7 +731,7 @@ function drawLineChart(canvasId, data) {
     ctx.fill();
   });
 
-  ctx.fillStyle = '#6b7280';
+  ctx.fillStyle = '#7d756a';
   ctx.font = '10px sans-serif';
   ctx.textAlign = 'center';
   const labelEvery = Math.ceil(data.length / 8);

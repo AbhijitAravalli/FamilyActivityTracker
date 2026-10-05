@@ -1,20 +1,21 @@
 :root {
-  --primary: #4f6df5;
-  --primary-dark: #3b52c4;
-  --primary-light: #eef1fe;
-  --bg: #f3f5fa;
-  --card-bg: #ffffff;
-  --text: #1a1f2b;
-  --muted: #6b7280;
-  --border: #e6e8f0;
-  --danger: #e5484d;
-  --sidebar-bg: #171b2c;
-  --sidebar-text: #c6cbe0;
+  --primary: #5b6ee8;
+  --primary-dark: #4452c4;
+  --primary-light: #eef0fd;
+  --gold: #c9973f;
+  --bg: #efe9dd;
+  --card-bg: #fdfbf7;
+  --text: #2a2620;
+  --muted: #7d756a;
+  --border: #e6ded0;
+  --danger: #c4493f;
+  --sidebar-bg: #221c2e;
+  --sidebar-text: #c9c2d6;
   --sidebar-text-active: #ffffff;
   --radius: 14px;
   --radius-sm: 10px;
-  --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 10px rgba(16, 24, 40, 0.04);
-  --shadow-md: 0 2px 4px rgba(16, 24, 40, 0.06), 0 8px 20px rgba(16, 24, 40, 0.06);
+  --shadow: 0 1px 2px rgba(42, 33, 22, 0.05), 0 4px 10px rgba(42, 33, 22, 0.05);
+  --shadow-md: 0 2px 4px rgba(42, 33, 22, 0.07), 0 10px 24px rgba(42, 33, 22, 0.08);
 }
 
 * {
@@ -28,7 +29,10 @@ html, body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at 100% -10%, #eef1ff 0%, transparent 60%), linear-gradient(180deg, #f6f7fb 0%, #eef0f6 100%);
+  background:
+    radial-gradient(1100px 550px at 100% -8%, #eef1fd 0%, transparent 60%),
+    radial-gradient(900px 500px at -5% 100%, #f7ecd9 0%, transparent 55%),
+    linear-gradient(180deg, #f3eee3 0%, #ece4d4 100%);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
@@ -43,7 +47,7 @@ body {
 .sidebar {
   width: 248px;
   flex-shrink: 0;
-  background: linear-gradient(195deg, #1b2036 0%, #11141f 100%);
+  background: linear-gradient(195deg, #241d33 0%, #16121f 100%);
   color: var(--sidebar-text);
   display: flex;
   flex-direction: column;
@@ -51,7 +55,7 @@ body {
   position: sticky;
   top: 0;
   height: 100vh;
-  box-shadow: 4px 0 24px rgba(10, 12, 24, 0.12);
+  box-shadow: 4px 0 24px rgba(20, 14, 10, 0.15);
 }
 
 .brand {
@@ -68,11 +72,12 @@ body {
   height: 38px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--primary), #7c8ff8);
+  background: linear-gradient(135deg, var(--primary), var(--gold));
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  box-shadow: 0 3px 10px rgba(201, 151, 63, 0.3);
 }
 
 .brand-icon svg {
@@ -126,7 +131,7 @@ body {
 .tab-btn.active {
   background: var(--primary);
   color: #fff;
-  box-shadow: 0 4px 10px rgba(79, 109, 245, 0.35);
+  box-shadow: 0 4px 10px rgba(91, 110, 232, 0.35);
 }
 
 .nav-icon {
@@ -166,7 +171,7 @@ body {
   letter-spacing: -0.02em;
   font-weight: 700;
   color: var(--text);
-  background: linear-gradient(90deg, var(--text), #4a5174);
+  background: linear-gradient(90deg, var(--text), #6b5d44);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -299,7 +304,7 @@ select:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(79, 109, 245, 0.12);
+  box-shadow: 0 0 0 3px rgba(91, 110, 232, 0.12);
 }
 
 .btn-primary,
@@ -316,12 +321,12 @@ textarea:focus {
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), #6c7ef8);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(79, 109, 245, 0.28);
+  box-shadow: 0 2px 8px rgba(91, 110, 232, 0.28);
 }
 
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  box-shadow: 0 4px 12px rgba(79, 109, 245, 0.35);
+  box-shadow: 0 4px 12px rgba(91, 110, 232, 0.35);
 }
 
 .btn-primary:active {
@@ -360,14 +365,14 @@ textarea:focus {
   border: 1px solid var(--border);
   border-left: 3px solid var(--primary);
   border-radius: var(--radius-sm);
-  background: #fbfbfe;
+  background: #fbf9f3;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .activity-item:hover {
-  border-color: #c9cff5;
-  border-left-color: var(--primary);
-  background: #fff;
+  border-color: #d8cdb0;
+  border-left-color: var(--gold);
+  background: #fffdf8;
 }
 
 .activity-item .meta {
@@ -533,8 +538,8 @@ textarea:focus {
 .summary-tile {
   flex: 1;
   text-align: center;
-  background: linear-gradient(160deg, #eef1fe 0%, #e4e9fc 100%);
-  border: 1px solid #dde3fb;
+  background: linear-gradient(160deg, #f3efe3 0%, #e9e1cd 100%);
+  border: 1px solid #ddd2ab;
   border-radius: var(--radius-sm);
   padding: 16px 8px;
   display: flex;

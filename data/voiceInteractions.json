@@ -152,5 +152,93 @@
     },
     "status": "PARSED",
     "createdAt": "2026-10-05T19:14:20.814Z"
+  },
+  {
+    "id": "1dfc38c9-5e6e-4151-ae73-0a9546c270d0",
+    "transcript": "Picked up my son from school at.",
+    "extracted": {
+      "activities": [],
+      "clarification": "Got \"Picked up my son\" - about how long did that take, or what time was it?",
+      "rawTranscript": "Picked up my son from school at."
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T20:39:54.090Z"
+  },
+  {
+    "id": "858b4130-af2d-403f-acd2-1039031d7741",
+    "transcript": "Pick up something school, uh, starting 4:30 PM, end by 5:30.",
+    "extracted": {
+      "activities": [],
+      "clarification": "Got \"Pick up something school, uh, starting 4:30 PM, end by 5:30.\" - about how long did that take, or what time was it?",
+      "rawTranscript": "Pick up something school, uh, starting 4:30 PM, end by 5:30."
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T20:40:13.156Z"
+  },
+  {
+    "id": "759a1100-b9e5-4152-ab95-0f11060faf61",
+    "transcript": "Pick up son from school, 40 minutes.",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Pick up son",
+          "category": "School",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T20:00:33.470Z",
+          "endAt": "2026-10-05T20:40:33.470Z",
+          "durationMinutes": 40,
+          "notes": "",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "Pick up son from school, 40 minutes."
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T20:40:33.470Z"
+  },
+  {
+    "id": "b6137aed-89ff-41e2-bd46-b6fcc3eabac9",
+    "transcript": "I prepared dinner from 6:10 to 7 PM",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Prepared dinner",
+          "category": "Cooking",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T21:10:00.000Z",
+          "endAt": "2026-10-05T22:00:00.000Z",
+          "durationMinutes": 50,
+          "notes": "",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "I prepared dinner from 6:10 to 7 PM"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T21:01:44.282Z"
+  },
+  {
+    "id": "bd491eab-7d1e-4905-b16d-9a28be9eef51",
+    "transcript": "Today I took Atharv to the bus stop at 7:30",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Took Atharv to the bus stop",
+          "category": "School",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T10:30:00.000Z",
+          "endAt": "2026-10-05T10:45:00.000Z",
+          "durationMinutes": 15,
+          "notes": "Duration estimated from voice input",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "Today I took Atharv to the bus stop at 7:30"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T21:05:18.325Z"
   }
 ]

@@ -13,6 +13,7 @@ const CATEGORIES_FILE = path.join(DATA_DIR, 'categories.json');
 const TIMERS_FILE = path.join(DATA_DIR, 'timers.json');
 const VOICE_INTERACTIONS_FILE = path.join(DATA_DIR, 'voiceInteractions.json');
 const { parseVoiceTranscript } = require('./lib/voiceParser');
+const { isoToAdtDateStr, nowAdtDateStr } = require('./lib/timezone');
 
 function readJson(file, fallback) {
   try {
@@ -152,7 +153,7 @@ async function handleApi(req, res, pathname) {
     if (!transcript) return sendJson(res, 400, { error: 'transcript is required' });
 
     const nowIso = new Date().toISOString();
-    const date = body.date || nowIso.slice(0, 10);
+    const date = body.date || nowAdtDateStr();
     const result = parseVoiceTranscript(transcript, { date, nowIso });
 
     const interactions = readJson(VOICE_INTERACTIONS_FILE, []);
@@ -287,7 +288,7 @@ async function handleApi(req, res, pathname) {
       memberId: timer.memberId,
       name: timer.name,
       category: timer.category,
-      date: timer.startAt.slice(0, 10),
+      date: isoToAdtDateStr(timer.startAt),
       startAt: timer.startAt,
       endAt,
       durationMinutes: minutesBetween(timer.startAt, endAt),
@@ -346,7 +347,7 @@ async function handleApi(req, res, pathname) {
       .sort((a, b) => b.minutes - a.minutes);
 
     const dailyTotals = [];
-    for (let d = new Date(from); d <= new Date(to); d.setDate(d.getDate() + 1)) {
+    for (let d = new Date(`${from}T00:00:00Z`); d <= new Date(`${to}T00:00:00Z`); d.setUTCDate(d.getUTCDate() + 1)) {
       const dateStr = d.toISOString().slice(0, 10);
       dailyTotals.push({ date: dateStr, minutes: dailyMinutes[dateStr] || 0 });
     }
