@@ -1,0 +1,156 @@
+[
+  {
+    "id": "2793b296-4abb-4221-baec-df5a331e5176",
+    "transcript": "I just finished cleaning the kitchen for about 25 minutes",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Cleaning the kitchen",
+          "category": "Cleaning",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T18:34:56.207Z",
+          "endAt": "2026-10-05T18:59:56.207Z",
+          "durationMinutes": 25,
+          "notes": "",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "I just finished cleaning the kitchen for about 25 minutes"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T18:59:56.207Z"
+  },
+  {
+    "id": "121429e8-d7bb-4443-9186-af362327d705",
+    "transcript": "I prepared dinner from 6:10 to 7 PM",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Prepared dinner",
+          "category": "Cooking",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T21:10:00.000Z",
+          "endAt": "2026-10-05T22:00:00.000Z",
+          "durationMinutes": 50,
+          "notes": "",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "I prepared dinner from 6:10 to 7 PM"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T19:00:11.413Z"
+  },
+  {
+    "id": "7a06a5a8-fd1b-4c47-a2a2-c52a8cc275a9",
+    "transcript": "Today I took Atharv to the bus stop at 7:30",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Took Atharv to the bus stop",
+          "category": "School",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T10:30:00.000Z",
+          "endAt": "2026-10-05T10:45:00.000Z",
+          "durationMinutes": 15,
+          "notes": "Duration estimated from voice input",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "Today I took Atharv to the bus stop at 7:30"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T19:00:12.244Z"
+  },
+  {
+    "id": "b8687d25-46ea-4e5a-a163-9ca9926d0631",
+    "transcript": "I dropped the kids at the bus stop and then cleaned the kitchen for 20 minutes",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Cleaned the kitchen",
+          "category": "Cleaning",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T18:40:13.112Z",
+          "endAt": "2026-10-05T19:00:13.112Z",
+          "durationMinutes": 20,
+          "notes": "",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": "I understood 1 activity, but didn't catch the time/duration for \"I dropped the kids at the bus stop\".",
+      "rawTranscript": "I dropped the kids at the bus stop and then cleaned the kitchen for 20 minutes"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T19:00:13.112Z"
+  },
+  {
+    "id": "96a344fe-9647-4014-b3b2-f3406dd1383d",
+    "transcript": "I did some cleaning",
+    "extracted": {
+      "activities": [],
+      "clarification": "Got \"Some cleaning\" - about how long did that take, or what time was it?",
+      "rawTranscript": "I did some cleaning"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T19:00:13.987Z"
+  },
+  {
+    "id": "1ad1392d-c24c-4afd-ac26-17d66210f413",
+    "transcript": "I prepared dinner from 6:10 to 7 PM",
+    "extracted": {
+      "activities": [
+        {
+          "name": "Prepared dinner",
+          "category": "Cooking",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T21:10:00.000Z",
+          "endAt": "2026-10-05T22:00:00.000Z",
+          "durationMinutes": 50,
+          "notes": "",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "I prepared dinner from 6:10 to 7 PM"
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T19:01:54.866Z"
+  },
+  {
+    "id": "baf9eb29-ce17-4480-8599-5a8b5ef4a2de",
+    "transcript": "TV watching.",
+    "extracted": {
+      "activities": [],
+      "clarification": "Got \"TV watching.\" - about how long did that take, or what time was it?",
+      "rawTranscript": "TV watching."
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T19:14:07.522Z"
+  },
+  {
+    "id": "1ec5b454-105e-4416-9930-26877f71cd45",
+    "transcript": "TV watching for 30 minutes today.",
+    "extracted": {
+      "activities": [
+        {
+          "name": "TV watching for 30 minutes today.",
+          "category": "Other",
+          "date": "2026-10-05",
+          "startAt": "2026-10-05T18:44:20.814Z",
+          "endAt": "2026-10-05T19:14:20.814Z",
+          "durationMinutes": 30,
+          "notes": "",
+          "inputMethod": "VOICE"
+        }
+      ],
+      "clarification": null,
+      "rawTranscript": "TV watching for 30 minutes today."
+    },
+    "status": "PARSED",
+    "createdAt": "2026-10-05T19:14:20.814Z"
+  }
+]

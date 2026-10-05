@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Activity Tracker</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3.2 20.5 10v9.3a1 1 0 0 1-1 1h-4.3v-6.1h-6.4v6.1H4.5a1 1 0 0 1-1-1V10L12 3.2Z" fill="currentColor"/>
+            <path d="M9.6 14.6a2.4 2.4 0 1 1 4.8 0" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="brand-text">
+          <h1>Family Tracker</h1>
+          <p>Making family work visible</p>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <button class="tab-btn active" data-tab="today">
+          <span class="nav-icon">🏠</span><span class="nav-label">Today</span>
+        </button>
+        <button class="tab-btn" data-tab="reports">
+          <span class="nav-icon">📊</span><span class="nav-label">Reports</span>
+        </button>
+        <button class="tab-btn" data-tab="settings">
+          <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Local demo build</p>
+        <p>Data stored in JSON files</p>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- TODAY TAB -->
+      <div id="tab-today" class="tab-panel">
+        <header class="content-header">
+          <h2>Today</h2>
+          <p>Log activities as they happen, by voice, timer, or manually.</p>
+        </header>
+
+        <div class="two-col">
+          <div class="col-main">
+            <section class="card">
+              <h3><span class="card-icon icon-voice">🎤</span>Tell me what you did</h3>
+              <div class="row">
+                <select id="v-member" required></select>
+                <button id="voice-btn" type="button" class="btn-primary">🎤 Start Recording</button>
+              </div>
+              <p id="voice-status" class="voice-status"></p>
+              <div id="voice-drafts" class="voice-drafts"></div>
+              <p id="voice-error" class="error"></p>
+            </section>
+
+            <section class="card">
+              <h3><span class="card-icon icon-timer">⏱️</span>Start Activity (Timer)</h3>
+              <form id="timer-form">
+                <input type="text" id="t-name" placeholder="e.g. Cleaning kitchen" required />
+                <div class="row">
+                  <select id="t-member" required></select>
+                  <select id="t-category" required></select>
+                </div>
+                <button type="submit" class="btn-primary">Start</button>
+              </form>
+              <div id="active-timers" class="active-timers"></div>
+            </section>
+
+            <section class="card">
+              <h3><span class="card-icon icon-add">📝</span><span id="activity-form-title">+ Add Activity</span></h3>
+              <form id="activity-form">
+                <input type="hidden" id="f-editing-id" value="" />
+                <label>
+                  Activity
+                  <input type="text" id="f-name" placeholder="e.g. Prepare kids lunch" required />
+                </label>
+
+                <div class="row">
+                  <label>
+                    Member
+                    <select id="f-member" required></select>
+                  </label>
+                  <label>
+                    Category
+                    <select id="f-category" required></select>
+                  </label>
+                </div>
+
+                <label>
+                  Date
+                  <input type="date" id="f-date" required />
+                </label>
+
+                <div class="row">
+                  <label>
+                    Start
+                    <input type="time" id="f-start" required />
+                  </label>
+                  <label>
+                    End
+                    <input type="time" id="f-end" required />
+                  </label>
+                </div>
+
+                <label>
+                  Notes (optional)
+                  <textarea id="f-notes" rows="2" placeholder="Optional notes"></textarea>
+                </label>
+
+                <div class="row">
+                  <button type="submit" id="f-submit-btn" class="btn-primary">Save Activity</button>
+                  <button type="button" id="f-cancel-btn" class="btn-secondary hidden">Cancel</button>
+                </div>
+              </form>
+              <p id="form-error" class="error"></p>
+            </section>
+          </div>
+
+          <div class="col-side">
+            <section class="card">
+              <div class="section-header">
+                <h3><span class="card-icon icon-list">📋</span>Activity by Date</h3>
+                <input type="date" id="view-date" />
+              </div>
+              <div id="activity-list" class="activity-list"></div>
+            </section>
+
+            <section class="card">
+              <h3><span class="card-icon icon-consolidated">🧮</span>Consolidated Hours</h3>
+              <div id="member-totals" class="member-totals"></div>
+              <p class="family-total">Combined total: <strong id="family-total">0h 0m</strong></p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTS TAB -->
+      <div id="tab-reports" class="tab-panel hidden">
+        <header class="content-header">
+          <h2>Reports</h2>
+          <p>See family contribution trends over time.</p>
+        </header>
+
+        <div class="two-col">
+          <div class="col-main">
+            <section class="card">
+              <h3><span class="card-icon icon-range">📅</span>Report Range</h3>
+              <div class="range-presets">
+                <button class="btn-secondary" data-range="week">This Week</button>
+                <button class="btn-secondary" data-range="month">This Month</button>
+              </div>
+              <div class="row">
+                <label>From <input type="date" id="r-from" /></label>
+                <label>To <input type="date" id="r-to" /></label>
+              </div>
+              <button id="r-refresh" class="btn-primary">Refresh Report</button>
+            </section>
+
+            <section class="card">
+              <h3><span class="card-icon icon-summary">📊</span>Summary</h3>
+              <div class="summary-grid">
+                <div class="summary-tile"><span id="r-total">0h 0m</span><label>Total family activity</label></div>
+                <div class="summary-tile"><span id="r-count">0</span><label>Activities recorded</label></div>
+                <div class="summary-tile"><span id="r-avg">0m</span><label>Average duration</label></div>
+              </div>
+            </section>
+
+            <section class="card">
+              <h3><span class="card-icon icon-members-chart">👪</span>Contribution by Member</h3>
+              <canvas id="chart-members" width="400" height="200"></canvas>
+              <div id="r-member-list" class="member-totals"></div>
+            </section>
+          </div>
+
+          <div class="col-side">
+            <section class="card">
+              <h3><span class="card-icon icon-category">🗂️</span>Time by Category</h3>
+              <canvas id="chart-categories" width="400" height="220"></canvas>
+            </section>
+
+            <section class="card">
+              <h3><span class="card-icon icon-trend">📈</span>Daily Activity Trend</h3>
+              <canvas id="chart-daily" width="400" height="200"></canvas>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div id="tab-settings" class="tab-panel hidden">
+        <header class="content-header">
+          <h2>Settings</h2>
+          <p>Manage family members and activity categories.</p>
+        </header>
+
+        <div class="two-col">
+          <div class="col-main">
+            <section class="card">
+              <h3><span class="card-icon icon-members">👨‍👩‍👧</span>Family Members</h3>
+              <ul id="settings-member-list" class="plain-list"></ul>
+              <form id="member-form" class="row">
+                <input type="text" id="m-name" placeholder="Member name" required />
+                <button type="submit" class="btn-secondary">Add</button>
+              </form>
+            </section>
+          </div>
+
+          <div class="col-side">
+            <section class="card">
+              <h3><span class="card-icon icon-categories">🏷️</span>Categories</h3>
+              <ul id="settings-category-list" class="plain-list"></ul>
+              <form id="category-form" class="row">
+                <input type="text" id="c-name" placeholder="New category name" required />
+                <button type="submit" class="btn-secondary">Add</button>
+              </form>
+              <p id="category-error" class="error"></p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
